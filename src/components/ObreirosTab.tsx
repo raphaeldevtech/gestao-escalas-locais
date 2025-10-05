@@ -90,6 +90,10 @@ export const ObreirosTab = ({ obreiros, onUpdate }: ObreirosTabProps) => {
                 <span className="font-medium">Máximo por semana:</span>{' '}
                 {obreiro.frequenciaMaxima}x
               </div>
+              <div>
+                <span className="font-medium">Máximo por mês:</span>{' '}
+                {obreiro.frequenciaMaximaMensal}x
+              </div>
               {obreiro.observacoes && (
                 <div className="text-muted-foreground italic">
                   {obreiro.observacoes}

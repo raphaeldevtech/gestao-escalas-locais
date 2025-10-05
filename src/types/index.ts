@@ -11,6 +11,7 @@ export interface Obreiro {
     domingo: { manha: boolean; tarde: boolean; noite: boolean };
   };
   frequenciaMaxima: number; // máximo de escalas por semana
+  frequenciaMaximaMensal: number; // máximo de escalas por mês
   locaisPreferidos: string[]; // IDs dos locais que prefere
   observacoes?: string;
 }

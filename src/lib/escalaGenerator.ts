@@ -14,8 +14,9 @@ export const generateEscala = (
   const inicio = startOfMonth(mes);
   const fim = endOfMonth(mes);
   
-  // Contador de escalas por obreiro na semana
+  // Contador de escalas por obreiro na semana e no mês
   const contadorSemanal = new Map<string, number>();
+  const contadorMensal = new Map<string, number>();
   
   let currentDate = inicio;
   let currentWeekStart = inicio;
@@ -38,11 +39,13 @@ export const generateEscala = (
           const obrejrosDisponiveis = obreiros.filter((obreiro) => {
             const disp = obreiro.disponibilidade[diaSemana as keyof typeof obreiro.disponibilidade];
             const dispPeriodo = disp[periodo.periodo];
-            const contagem = contadorSemanal.get(obreiro.id) || 0;
+            const contagemSemanal = contadorSemanal.get(obreiro.id) || 0;
+            const contagemMensal = contadorMensal.get(obreiro.id) || 0;
             
             return (
               dispPeriodo &&
-              contagem < obreiro.frequenciaMaxima &&
+              contagemSemanal < obreiro.frequenciaMaxima &&
+              contagemMensal < obreiro.frequenciaMaximaMensal &&
               (obreiro.locaisPreferidos.length === 0 || 
                obreiro.locaisPreferidos.includes(local.id))
             );
@@ -66,10 +69,14 @@ export const generateEscala = (
               codigoCulto: local.codigo,
             });
             
-            // Atualizar contador
+            // Atualizar contadores
             contadorSemanal.set(
               obreiroSelecionado.id,
               (contadorSemanal.get(obreiroSelecionado.id) || 0) + 1
+            );
+            contadorMensal.set(
+              obreiroSelecionado.id,
+              (contadorMensal.get(obreiroSelecionado.id) || 0) + 1
             );
           }
         });

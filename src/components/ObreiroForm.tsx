@@ -38,6 +38,9 @@ export const ObreiroForm = ({ obreiro, onClose, onSuccess }: ObreiroFormProps) =
   const [frequenciaMaxima, setFrequenciaMaxima] = useState(
     obreiro?.frequenciaMaxima || 3
   );
+  const [frequenciaMaximaMensal, setFrequenciaMaximaMensal] = useState(
+    obreiro?.frequenciaMaximaMensal || 12
+  );
   const [observacoes, setObservacoes] = useState(obreiro?.observacoes || '');
   const [disponibilidade, setDisponibilidade] = useState(
     obreiro?.disponibilidade || {
@@ -68,6 +71,7 @@ export const ObreiroForm = ({ obreiro, onClose, onSuccess }: ObreiroFormProps) =
       nome: nome.trim(),
       disponibilidade,
       frequenciaMaxima,
+      frequenciaMaximaMensal,
       locaisPreferidos: obreiro?.locaisPreferidos || [],
       observacoes: observacoes.trim(),
     };
@@ -118,7 +122,7 @@ export const ObreiroForm = ({ obreiro, onClose, onSuccess }: ObreiroFormProps) =
       </CardHeader>
       <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="nome">Nome do Obreiro *</Label>
               <Input
@@ -138,6 +142,18 @@ export const ObreiroForm = ({ obreiro, onClose, onSuccess }: ObreiroFormProps) =
                 max="21"
                 value={frequenciaMaxima}
                 onChange={(e) => setFrequenciaMaxima(Number(e.target.value))}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="frequenciaMensal">Máximo por Mês *</Label>
+              <Input
+                id="frequenciaMensal"
+                type="number"
+                min="1"
+                max="31"
+                value={frequenciaMaximaMensal}
+                onChange={(e) => setFrequenciaMaximaMensal(Number(e.target.value))}
                 required
               />
             </div>
