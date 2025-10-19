@@ -155,30 +155,31 @@ export const GerarEscalaTab = ({ obreiros, locais, onEscalaGerada }: GerarEscala
           <CardTitle>Períodos dos Cultos</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'].map((dia) => (
-              <div key={dia} className="border rounded-lg p-4">
-                <h4 className="font-semibold mb-3">{dia}</h4>
-                <div className="space-y-4">
-                  {PERIODOS_DISPONIVEIS.filter((p) => p.dia === dia).map((periodo) => {
-                    const id = `${periodo.dia}-${periodo.periodo}`;
-                    const isAtivo = periodosAtivos.includes(id);
-                    return (
-                      <div key={id} className="flex items-center space-x-2 pb-3 border-b last:border-0">
-                        <Checkbox
-                          id={id}
-                          checked={isAtivo}
-                          onCheckedChange={() => togglePeriodo(id)}
-                        />
-                        <Label htmlFor={id} className="cursor-pointer capitalize font-medium">
-                          {periodo.periodo}
-                        </Label>
-                      </div>
-                    );
-                  })}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {PERIODOS_DISPONIVEIS.map((periodo) => {
+              const id = `${periodo.dia}-${periodo.periodo}`;
+              const isAtivo = periodosAtivos.includes(id);
+              return (
+                <div
+                  key={id}
+                  className={`flex items-center space-x-2 p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                    isAtivo
+                      ? 'border-primary bg-primary/5'
+                      : 'border-border hover:border-primary/50'
+                  }`}
+                  onClick={() => togglePeriodo(id)}
+                >
+                  <Checkbox
+                    id={id}
+                    checked={isAtivo}
+                    onCheckedChange={() => togglePeriodo(id)}
+                  />
+                  <Label htmlFor={id} className="cursor-pointer font-medium">
+                    {periodo.label}
+                  </Label>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </CardContent>
       </Card>
