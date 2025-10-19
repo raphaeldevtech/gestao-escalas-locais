@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Obreiro, LocalCulto, Periodo } from '@/types';
 import { generateEscala } from '@/lib/escalaGenerator';
 import { storageService } from '@/lib/storage';
@@ -45,7 +44,6 @@ const PERIODOS_DISPONIVEIS: Periodo[] = [
 export const GerarEscalaTab = ({ obreiros, locais, onEscalaGerada }: GerarEscalaTabProps) => {
   const [mesSelecionado, setMesSelecionado] = useState(0);
   const [periodosAtivos, setPeriodosAtivos] = useState<string[]>([]);
-  const [tiposDia, setTiposDia] = useState<Record<string, 'todos' | 'impares' | 'pares'>>({});
   const [gerando, setGerando] = useState(false);
   const { toast } = useToast();
 
@@ -55,13 +53,6 @@ export const GerarEscalaTab = ({ obreiros, locais, onEscalaGerada }: GerarEscala
         ? prev.filter((p) => p !== periodo)
         : [...prev, periodo]
     );
-  };
-
-  const setTipoDia = (periodoId: string, tipo: 'todos' | 'impares' | 'pares') => {
-    setTiposDia((prev) => ({
-      ...prev,
-      [periodoId]: tipo,
-    }));
   };
 
   const handleGerar = () => {
@@ -98,13 +89,7 @@ export const GerarEscalaTab = ({ obreiros, locais, onEscalaGerada }: GerarEscala
       const mesData = addMonths(new Date(), mesSelecionado);
       const periodosSelecionados = PERIODOS_DISPONIVEIS.filter((p) =>
         periodosAtivos.includes(`${p.dia}-${p.periodo}`)
-      ).map((p) => {
-        const id = `${p.dia}-${p.periodo}`;
-        return {
-          ...p,
-          tipoDia: tiposDia[id] || 'todos',
-        };
-      });
+      );
 
       const escalasGeradas = generateEscala(
         mesData,
@@ -179,45 +164,15 @@ export const GerarEscalaTab = ({ obreiros, locais, onEscalaGerada }: GerarEscala
                     const id = `${periodo.dia}-${periodo.periodo}`;
                     const isAtivo = periodosAtivos.includes(id);
                     return (
-                      <div key={id} className="space-y-2 pb-3 border-b last:border-0">
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id={id}
-                            checked={isAtivo}
-                            onCheckedChange={() => togglePeriodo(id)}
-                          />
-                          <Label htmlFor={id} className="cursor-pointer capitalize font-medium">
-                            {periodo.periodo}
-                          </Label>
-                        </div>
-                        {isAtivo && (
-                          <div className="ml-6 mt-2">
-                            <RadioGroup
-                              value={tiposDia[id] || 'todos'}
-                              onValueChange={(value) => setTipoDia(id, value as 'todos' | 'impares' | 'pares')}
-                              className="flex gap-4"
-                            >
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="todos" id={`${id}-todos`} />
-                                <Label htmlFor={`${id}-todos`} className="cursor-pointer text-sm">
-                                  Todos os dias
-                                </Label>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="impares" id={`${id}-impares`} />
-                                <Label htmlFor={`${id}-impares`} className="cursor-pointer text-sm">
-                                  Dias ímpares
-                                </Label>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="pares" id={`${id}-pares`} />
-                                <Label htmlFor={`${id}-pares`} className="cursor-pointer text-sm">
-                                  Dias pares
-                                </Label>
-                              </div>
-                            </RadioGroup>
-                          </div>
-                        )}
+                      <div key={id} className="flex items-center space-x-2 pb-3 border-b last:border-0">
+                        <Checkbox
+                          id={id}
+                          checked={isAtivo}
+                          onCheckedChange={() => togglePeriodo(id)}
+                        />
+                        <Label htmlFor={id} className="cursor-pointer capitalize font-medium">
+                          {periodo.periodo}
+                        </Label>
                       </div>
                     );
                   })}

@@ -33,15 +33,6 @@ export const generateEscala = (
     // Para cada período ativo no dia
     periodosAtivos.forEach((periodo) => {
       if (periodo.dia.toLowerCase() === diaSemana) {
-        // Verificar filtro de dias ímpares/pares
-        const diaDoMes = currentDate.getDate();
-        const ehDiaImpar = diaDoMes % 2 !== 0;
-        const ehDiaPar = diaDoMes % 2 === 0;
-        
-        // Se há filtro de tipo de dia, verificar se o dia atual atende
-        if (periodo.tipoDia === 'impares' && !ehDiaImpar) return;
-        if (periodo.tipoDia === 'pares' && !ehDiaPar) return;
-        // tipoDia === 'todos' ou undefined passa direto
         // Para cada local ativo
         locais.filter(l => l.ativo).forEach((local) => {
           // Encontrar obreiros disponíveis
