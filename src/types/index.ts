@@ -30,15 +30,10 @@ export interface Escala {
   data: string;
   diaSemana: string;
   periodo: 'manha' | 'tarde' | 'noite';
+  tipo: 'circulo' | 'pregacao'; // Círculo de Oração ou Ponto de Pregação
   obreiroId: string;
   obreiroNome: string;
   localId: string;
   localNome: string;
   codigoCulto: string;
-}
-
-export interface Periodo {
-  dia: string;
-  periodo: 'manha' | 'tarde' | 'noite';
-  label: string;
 }

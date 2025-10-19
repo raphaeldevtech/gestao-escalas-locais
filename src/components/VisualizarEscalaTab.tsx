@@ -101,6 +101,7 @@ export const VisualizarEscalaTab = ({ escalas, onUpdate }: VisualizarEscalaTabPr
                   <TableHead className="font-semibold">Data</TableHead>
                   <TableHead className="font-semibold">Dia</TableHead>
                   <TableHead className="font-semibold">Período</TableHead>
+                  <TableHead className="font-semibold">Tipo</TableHead>
                   <TableHead className="font-semibold">Obreiro</TableHead>
                   <TableHead className="font-semibold">Código</TableHead>
                   <TableHead className="font-semibold">Local</TableHead>
@@ -112,6 +113,15 @@ export const VisualizarEscalaTab = ({ escalas, onUpdate }: VisualizarEscalaTabPr
                     <TableCell className="font-medium">{escala.data}</TableCell>
                     <TableCell className="capitalize">{escala.diaSemana}</TableCell>
                     <TableCell className="capitalize">{escala.periodo}</TableCell>
+                    <TableCell>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${
+                        escala.tipo === 'circulo' 
+                          ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' 
+                          : 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
+                      }`}>
+                        {escala.tipo === 'circulo' ? 'Círculo de Oração' : 'Ponto de Pregação'}
+                      </span>
+                    </TableCell>
                     <TableCell>{escala.obreiroNome}</TableCell>
                     <TableCell>
                       <span className="bg-primary/10 text-primary px-2 py-1 rounded text-xs font-mono">
