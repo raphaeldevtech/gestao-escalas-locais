@@ -40,4 +40,5 @@ export interface Periodo {
   dia: string;
   periodo: 'manha' | 'tarde' | 'noite';
   label: string;
+  tipoDia?: 'todos' | 'impares' | 'pares'; // Filtro para dias do mês
 }
