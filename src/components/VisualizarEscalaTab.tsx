@@ -1,4 +1,4 @@
-import { Download, Trash2, Calendar } from 'lucide-react';
+import { Download, Trash2, Calendar, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -11,8 +11,11 @@ import {
 } from '@/components/ui/table';
 import { Escala } from '@/types';
 import { exportToExcel } from '@/lib/escalaGenerator';
+import { generatePDF } from '@/lib/pdfGenerator';
 import { storageService } from '@/lib/storage';
 import { useToast } from '@/hooks/use-toast';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 interface VisualizarEscalaTabProps {
   escalas: Escala[];
@@ -22,7 +25,7 @@ interface VisualizarEscalaTabProps {
 export const VisualizarEscalaTab = ({ escalas, onUpdate }: VisualizarEscalaTabProps) => {
   const { toast } = useToast();
 
-  const handleExport = () => {
+  const handleExportCSV = () => {
     if (escalas.length === 0) {
       toast({
         variant: 'destructive',
@@ -39,6 +42,27 @@ export const VisualizarEscalaTab = ({ escalas, onUpdate }: VisualizarEscalaTabPr
     toast({
       title: 'Exportado!',
       description: 'Escala exportada para CSV com sucesso.',
+    });
+  };
+
+  const handleExportPDF = () => {
+    if (escalas.length === 0) {
+      toast({
+        variant: 'destructive',
+        title: 'Nada para exportar',
+        description: 'Gere uma escala primeiro.',
+      });
+      return;
+    }
+
+    const locais = storageService.getLocais();
+    const primeirData = escalas[0]?.data || '';
+    const mes = primeirData.split('/').slice(1).join('/');
+    generatePDF(escalas, locais, mes);
+    
+    toast({
+      title: 'PDF Gerado!',
+      description: 'Escala exportada em PDF no formato da igreja.',
     });
   };
 
@@ -85,9 +109,13 @@ export const VisualizarEscalaTab = ({ escalas, onUpdate }: VisualizarEscalaTabPr
             <Trash2 className="w-4 h-4" />
             Limpar
           </Button>
-          <Button onClick={handleExport} className="gap-2">
+          <Button variant="outline" onClick={handleExportCSV} className="gap-2">
             <Download className="w-4 h-4" />
             Exportar CSV
+          </Button>
+          <Button onClick={handleExportPDF} className="gap-2">
+            <FileText className="w-4 h-4" />
+            Exportar PDF
           </Button>
         </div>
       </div>
