@@ -20,6 +20,14 @@ cd gestao-escalas-locais
 npm install
 ```
 
+**⚠️ Se aparecer erro "could not determine executable to run":**
+```bash
+# Limpar cache e reinstalar
+npm cache clean --force
+rm -rf node_modules package-lock.json
+npm install
+```
+
 ### 4. Adicionar a Plataforma Android
 ```bash
 npx cap add android
