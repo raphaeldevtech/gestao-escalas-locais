@@ -51,8 +51,18 @@ export const generateEscala = (
             const contagemSemanal = contadorSemanal.get(obreiro.id) || 0;
             const contagemMensal = contadorMensal.get(obreiro.id) || 0;
             
+            // Verificar preferência de dias do mês do obreiro
+            const diaDoMes = currentDate.getDate();
+            const ehDiaImpar = diaDoMes % 2 !== 0;
+            const ehDiaPar = diaDoMes % 2 === 0;
+            const atendePreferenciaDia = 
+              obreiro.preferenciasDiasMes === 'todos' ||
+              (obreiro.preferenciasDiasMes === 'impares' && ehDiaImpar) ||
+              (obreiro.preferenciasDiasMes === 'pares' && ehDiaPar);
+            
             return (
               dispPeriodo &&
+              atendePreferenciaDia &&
               contagemSemanal < obreiro.frequenciaMaxima &&
               contagemMensal < obreiro.frequenciaMaximaMensal &&
               (obreiro.locaisPreferidos.length === 0 || 

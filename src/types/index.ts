@@ -12,6 +12,7 @@ export interface Obreiro {
   };
   frequenciaMaxima: number; // máximo de escalas por semana
   frequenciaMaximaMensal: number; // máximo de escalas por mês
+  preferenciasDiasMes: 'todos' | 'impares' | 'pares'; // preferência por dias do mês
   locaisPreferidos: string[]; // IDs dos locais que prefere
   observacoes?: string;
 }

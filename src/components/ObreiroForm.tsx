@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Obreiro } from '@/types';
 import { storageService } from '@/lib/storage';
 import { useToast } from '@/hooks/use-toast';
@@ -41,6 +42,9 @@ export const ObreiroForm = ({ obreiro, onClose, onSuccess }: ObreiroFormProps) =
   const [frequenciaMaximaMensal, setFrequenciaMaximaMensal] = useState(
     obreiro?.frequenciaMaximaMensal || 12
   );
+  const [preferenciasDiasMes, setPreferenciasDiasMes] = useState<'todos' | 'impares' | 'pares'>(
+    obreiro?.preferenciasDiasMes || 'todos'
+  );
   const [observacoes, setObservacoes] = useState(obreiro?.observacoes || '');
   const [disponibilidade, setDisponibilidade] = useState(
     obreiro?.disponibilidade || {
@@ -72,6 +76,7 @@ export const ObreiroForm = ({ obreiro, onClose, onSuccess }: ObreiroFormProps) =
       disponibilidade,
       frequenciaMaxima,
       frequenciaMaximaMensal,
+      preferenciasDiasMes,
       locaisPreferidos: obreiro?.locaisPreferidos || [],
       observacoes: observacoes.trim(),
     };
@@ -160,7 +165,33 @@ export const ObreiroForm = ({ obreiro, onClose, onSuccess }: ObreiroFormProps) =
           </div>
 
           <div className="space-y-3">
-            <Label>Disponibilidade</Label>
+            <Label>Preferência por Dias do Mês</Label>
+            <RadioGroup value={preferenciasDiasMes} onValueChange={(value) => setPreferenciasDiasMes(value as 'todos' | 'impares' | 'pares')}>
+              <div className="flex gap-6">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="todos" id="dias-todos" />
+                  <Label htmlFor="dias-todos" className="font-normal cursor-pointer">
+                    Todos os dias
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="impares" id="dias-impares" />
+                  <Label htmlFor="dias-impares" className="font-normal cursor-pointer">
+                    Apenas dias ímpares
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="pares" id="dias-pares" />
+                  <Label htmlFor="dias-pares" className="font-normal cursor-pointer">
+                    Apenas dias pares
+                  </Label>
+                </div>
+              </div>
+            </RadioGroup>
+          </div>
+
+          <div className="space-y-3">
+            <Label>Disponibilidade por Dia da Semana</Label>
             <div className="border rounded-lg overflow-hidden">
               <div className="grid grid-cols-4 bg-muted text-sm font-medium">
                 <div className="p-2 border-r">Dia</div>
