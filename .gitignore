@@ -9,8 +9,14 @@ lerna-debug.log*
 
 node_modules
 dist
+dist-electron
 dist-ssr
 *.local
+android/app/build
+android/build
+android/capacitor-cordova-android-plugins/build
+.bun.lockb
+bun.lockb
 
 # Editor directories and files
 .vscode/*
