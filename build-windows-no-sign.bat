@@ -31,7 +31,8 @@ if errorlevel 1 (
 echo.
 echo [3/4] Criando instalador Windows...
 set CSC_IDENTITY_AUTO_DISCOVERY=false
-call electron-builder --win --config.win.sign=null
+set WIN_CSC_LINK=
+call npx electron-builder --win --config.win.sign=null
 if errorlevel 1 (
     echo ERRO: Falha ao criar instalador
     pause

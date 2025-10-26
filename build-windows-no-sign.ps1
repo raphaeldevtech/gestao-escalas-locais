@@ -34,7 +34,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host ""
 Write-Host "[3/4] Criando instalador Windows..." -ForegroundColor Yellow
 $env:CSC_IDENTITY_AUTO_DISCOVERY = "false"
-electron-builder --win --config.win.sign=null
+$env:WIN_CSC_LINK = ""
+npx electron-builder --win --config.win.sign=null
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERRO: Falha ao criar instalador" -ForegroundColor Red
     Read-Host "Pressione Enter para sair"
