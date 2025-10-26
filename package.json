@@ -118,7 +118,8 @@
           "target": "nsis",
           "arch": ["x64", "ia32"]
         }
-      ]
+      ],
+      "sign": null
     },
     "nsis": {
       "oneClick": false,
