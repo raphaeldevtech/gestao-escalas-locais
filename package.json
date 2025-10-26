@@ -119,7 +119,9 @@
           "arch": ["x64", "ia32"]
         }
       ],
-      "sign": null
+      "sign": null,
+      "signDlls": false,
+      "signExtFiles": false
     },
     "nsis": {
       "oneClick": false,
