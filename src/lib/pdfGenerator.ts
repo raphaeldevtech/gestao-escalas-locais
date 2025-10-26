@@ -3,8 +3,9 @@ import autoTable from 'jspdf-autotable';
 import { Escala, LocalCulto } from '@/types';
 import { format, parse } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { fileManager } from './fileManager';
 
-export const generatePDF = (escalas: Escala[], locais: LocalCulto[], mesAno: string) => {
+export const generatePDF = async (escalas: Escala[], locais: LocalCulto[], mesAno: string) => {
   const doc = new jsPDF('portrait', 'mm', 'a4');
   
   // Cabeçalho
@@ -144,6 +145,8 @@ export const generatePDF = (escalas: Escala[], locais: LocalCulto[], mesAno: str
     doc.text(`Página ${i} de ${pageCount}`, doc.internal.pageSize.width - 14, doc.internal.pageSize.height - 10, { align: 'right' });
   }
   
-  // Salvar PDF
-  doc.save(`Escala_${mesAno.replace('/', '_')}.pdf`);
+  // Salvar PDF usando fileManager (funciona em mobile e desktop)
+  const fileName = `Escala_${mesAno.replace('/', '_')}.pdf`;
+  const pdfData = doc.output('dataurlstring');
+  await fileManager.savePDF(fileName, pdfData);
 };

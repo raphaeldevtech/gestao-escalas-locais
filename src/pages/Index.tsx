@@ -5,6 +5,7 @@ import { ObreirosTab } from '@/components/ObreirosTab';
 import { LocaisTab } from '@/components/LocaisTab';
 import { GerarEscalaTab } from '@/components/GerarEscalaTab';
 import { VisualizarEscalaTab } from '@/components/VisualizarEscalaTab';
+import { DadosTab } from '@/components/DadosTab';
 import { storageService } from '@/lib/storage';
 import { Obreiro, LocalCulto, Escala } from '@/types';
 
@@ -50,6 +51,9 @@ const Index = () => {
         )}
         {activeTab === 'visualizar' && (
           <VisualizarEscalaTab escalas={escalas} onUpdate={loadData} />
+        )}
+        {activeTab === 'dados' && (
+          <DadosTab onUpdate={loadData} />
         )}
       </main>
     </div>

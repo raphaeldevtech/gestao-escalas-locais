@@ -1,4 +1,4 @@
-import { Users, MapPin, Calendar, LayoutGrid } from 'lucide-react';
+import { Users, MapPin, Calendar, LayoutGrid, Database } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface TabNavigationProps {
@@ -39,6 +39,13 @@ export const TabNavigation = ({ activeTab, onTabChange }: TabNavigationProps) =>
             >
               <LayoutGrid className="w-4 h-4" />
               <span className="hidden sm:inline">Visualizar</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="dados"
+              className="data-[state=active]:bg-primary/10 data-[state=active]:text-primary flex gap-2"
+            >
+              <Database className="w-4 h-4" />
+              <span className="hidden sm:inline">Dados</span>
             </TabsTrigger>
           </TabsList>
         </Tabs>

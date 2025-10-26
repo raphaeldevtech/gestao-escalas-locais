@@ -156,7 +156,10 @@ export const generateEscala = (
   return escalas;
 };
 
-export const exportToExcel = (escalas: Escala[], mes: string) => {
+export const exportToExcel = async (escalas: Escala[], mes: string) => {
+  // Importar fileManager localmente para evitar dependência circular
+  const { fileManager } = await import('./fileManager');
+  
   // Criar CSV simples para download
   const headers = ['DATA', 'DIA', 'PERÍODO', 'TIPO', 'OBREIRO', 'CÓDIGO', 'LOCAL'];
   const rows = escalas.map(e => [
@@ -174,15 +177,7 @@ export const exportToExcel = (escalas: Escala[], mes: string) => {
     ...rows.map(row => row.join(','))
   ].join('\n');
   
-  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
-  const link = document.createElement('a');
-  const url = URL.createObjectURL(blob);
-  
-  link.setAttribute('href', url);
-  link.setAttribute('download', `escala_${mes}.csv`);
-  link.style.visibility = 'hidden';
-  
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  // Salvar usando fileManager (funciona em mobile e desktop)
+  const fileName = `escala_${mes}.csv`;
+  await fileManager.saveCSV(fileName, csv);
 };

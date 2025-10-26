@@ -25,7 +25,7 @@ interface VisualizarEscalaTabProps {
 export const VisualizarEscalaTab = ({ escalas, onUpdate }: VisualizarEscalaTabProps) => {
   const { toast } = useToast();
 
-  const handleExportCSV = () => {
+  const handleExportCSV = async () => {
     if (escalas.length === 0) {
       toast({
         variant: 'destructive',
@@ -35,17 +35,25 @@ export const VisualizarEscalaTab = ({ escalas, onUpdate }: VisualizarEscalaTabPr
       return;
     }
 
-    const primeirData = escalas[0]?.data || '';
-    const mes = primeirData.split('/').slice(1).join('-');
-    exportToExcel(escalas, mes);
-    
-    toast({
-      title: 'Exportado!',
-      description: 'Escala exportada para CSV com sucesso.',
-    });
+    try {
+      const primeirData = escalas[0]?.data || '';
+      const mes = primeirData.split('/').slice(1).join('-');
+      await exportToExcel(escalas, mes);
+      
+      toast({
+        title: 'Exportado!',
+        description: 'Escala exportada para CSV com sucesso.',
+      });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Erro ao exportar',
+        description: 'Não foi possível exportar o CSV.',
+      });
+    }
   };
 
-  const handleExportPDF = () => {
+  const handleExportPDF = async () => {
     if (escalas.length === 0) {
       toast({
         variant: 'destructive',
@@ -55,15 +63,23 @@ export const VisualizarEscalaTab = ({ escalas, onUpdate }: VisualizarEscalaTabPr
       return;
     }
 
-    const locais = storageService.getLocais();
-    const primeirData = escalas[0]?.data || '';
-    const mes = primeirData.split('/').slice(1).join('/');
-    generatePDF(escalas, locais, mes);
-    
-    toast({
-      title: 'PDF Gerado!',
-      description: 'Escala exportada em PDF no formato da igreja.',
-    });
+    try {
+      const locais = storageService.getLocais();
+      const primeirData = escalas[0]?.data || '';
+      const mes = primeirData.split('/').slice(1).join('/');
+      await generatePDF(escalas, locais, mes);
+      
+      toast({
+        title: 'PDF Gerado!',
+        description: 'Escala exportada em PDF no formato da igreja.',
+      });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Erro ao exportar',
+        description: 'Não foi possível gerar o PDF.',
+      });
+    }
   };
 
   const handleLimpar = () => {

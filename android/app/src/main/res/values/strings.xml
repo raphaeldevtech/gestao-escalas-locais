@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">gestao-escalas-locais</string>
+    <string name="title_activity_main">gestao-escalas-locais</string>
+    <string name="package_name">app.lovable.ded30e1726964eed909c73fafc70c85b</string>
+    <string name="custom_url_scheme">app.lovable.ded30e1726964eed909c73fafc70c85b</string>
+</resources>

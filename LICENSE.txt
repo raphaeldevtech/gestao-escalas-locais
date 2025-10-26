@@ -1,0 +1,19 @@
+LICENÇA DE USO - GESTÃO DE ESCALAS
+
+Copyright (c) 2025 Igreja Evangélica Assembleia de Deus
+
+Este software é fornecido "como está", sem garantias de qualquer tipo.
+
+Permissões:
+- Uso para fins religiosos e administrativos da igreja
+- Modificação e adaptação para necessidades específicas
+- Distribuição interna dentro da organização
+
+Restrições:
+- Não pode ser vendido ou comercializado
+- Não pode ser usado para fins não relacionados à igreja
+
+ISENÇÃO DE GARANTIAS:
+Este software é fornecido sem garantias de qualquer tipo, expressas ou implícitas.
+Os autores não se responsabilizam por quaisquer danos resultantes do uso deste software.
+
